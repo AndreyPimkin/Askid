@@ -5,11 +5,11 @@ import com.robbit.askid.POJO.Client;
 import java.sql.*;
 
 
-public class DatabaseHandler extends Configs {
+public class DatabaseHandler{
     Connection dbConnection;
     public Connection getDbConnection() throws ClassNotFoundException, SQLException{
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        String connectionString = "jdbc:sqlserver://DESKTOP-3S74IR6;databaseName=askid;integratedSecurity=true;";
+        String connectionString = "jdbc:sqlserver://DESKTOP-2JU1ID3:1433;databaseName=askid;user=sa;password=sa;encrypt=false;";
         dbConnection = DriverManager.getConnection(connectionString);
         return dbConnection;
     }
