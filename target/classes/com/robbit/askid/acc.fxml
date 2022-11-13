@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.robbit.askid.Acc">
+   <children>
+      <TableView fx:id="tableAcc" layoutX="16.0" layoutY="14.0" prefHeight="380.0" prefWidth="671.0">
+        <columns>
+          <TableColumn fx:id="idClient" prefWidth="57.0" text="Номер клиента" />
+          <TableColumn fx:id="fullName" prefWidth="158.0" text="ФИО" />
+            <TableColumn fx:id="numberTreaty" minWidth="0.0" prefWidth="145.0" text="Номер договора" />
+            <TableColumn fx:id="dateTreaty" minWidth="0.0" prefWidth="129.0" text="Дата создания" />
+            <TableColumn fx:id="nameProduct" minWidth="0.0" prefWidth="187.0" text="Наименование товара" />
+        </columns>
+      </TableView>
+      <Button fx:id="okeyButton" layoutX="115.0" layoutY="430.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="139.0" style="-fx-background-color: none; -fx-border-color: black; -fx-border-radius: 15;" text="Okey">
+         <font>
+            <Font name="Verdana" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="cancelButton" layoutX="427.0" layoutY="430.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="139.0" style="-fx-background-color: none; -fx-border-color: black; -fx-border-radius: 15;" text="Cancel">
+         <font>
+            <Font name="Verdana" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
