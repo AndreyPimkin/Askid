@@ -28,8 +28,7 @@ public class Reg {
     @FXML private PasswordField password;
     @FXML
     private Label text;
-    @FXML
-    void initialize() {
+    @FXML void initialize() {
         close.setOnAction(actionEvent -> close.getScene().getWindow().hide());
         openAuto.setOnAction(actionEvent -> openWindow("/com/robbit/askid/authorization.fxml", open));
         open.setOnAction(actionEvent -> {

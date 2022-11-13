@@ -1,5 +1,4 @@
 package com.robbit.askid;
-
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,7 +6,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import com.robbit.askid.POJO.ForAcc;
 import com.robbit.askid.POJO.ForClient;
 import com.robbit.askid.POJO.Product;
@@ -21,53 +19,25 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class Acc {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private Button cancelButton;
-
-    @FXML
-    private TableColumn<ForAcc, String> dateTreaty;
-
-    @FXML
-    private TableColumn<ForAcc, String> fullName;
-
-    @FXML
-    private TableColumn<ForAcc, String> idClient;
-
-    @FXML
-    private TableColumn<ForAcc, String> nameProduct;
-
-    @FXML
-    private TableColumn<ForAcc, String > numberTreaty;
-
-    @FXML
-    private Button okeyButton;
-
-    @FXML
-    private TableView<ForAcc> tableAcc;
-
+    @FXML private ResourceBundle resources;
+    @FXML private URL location;
+    @FXML private Button cancelButton;
+    @FXML private TableColumn<ForAcc, String> dateTreaty;
+    @FXML private TableColumn<ForAcc, String> fullName;
+    @FXML private TableColumn<ForAcc, String> idClient;
+    @FXML private TableColumn<ForAcc, String> nameProduct;
+    @FXML private TableColumn<ForAcc, String > numberTreaty;
+    @FXML private Button okeyButton;
+    @FXML private TableView<ForAcc> tableAcc;
     private final ObservableList<ForAcc> treatyList = FXCollections.observableArrayList();
-
     DatabaseHandler dbHandler = new DatabaseHandler();
     private String formattedDate;
     ForAcc selectedNumber;
-
-    @FXML
-    void initialize() {
+    @FXML void initialize() {
         LocalDate ld = LocalDate.now();
         formattedDate = ld.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        try {
-            initData();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
+        try {initData();
+        } catch (SQLException e) {throw new RuntimeException(e);}
         okeyButton.setOnAction(actionEvent -> {
             ForAcc forAcc;
             selectedNumber = tableAcc.getSelectionModel().getSelectedItem();
@@ -76,14 +46,9 @@ public class Acc {
             forAcc.setDateTreaty(formattedDate);
             forAcc.setNumberTreaty(selectedNumber.getNumberTreaty());
             System.out.println(selectedNumber.getNumberTreaty());
-
-            try {
-                dbHandler.closeTreaty(forAcc);
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            refreshTable();
-        });
+            try {dbHandler.closeTreaty(forAcc);
+            } catch (SQLException | ClassNotFoundException e) {e.printStackTrace();}
+            refreshTable();});
 
         cancelButton.setOnAction(actionEvent -> {
             ForAcc forAcc;
@@ -92,22 +57,15 @@ public class Acc {
             forAcc.setStatus("Отклонен");
             forAcc.setDateTreaty(formattedDate);
             forAcc.setNumberTreaty(selectedNumber.getNumberTreaty());
-            try {
-                dbHandler.closeTreaty(forAcc);
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            refreshTable();
-        });
-
+            try {dbHandler.closeTreaty(forAcc);
+            } catch (SQLException | ClassNotFoundException e) {e.printStackTrace();}
+            refreshTable();});
         idClient.setCellValueFactory(new PropertyValueFactory<>("idClient"));
         fullName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         numberTreaty.setCellValueFactory(new PropertyValueFactory<>("numberTreaty"));
         dateTreaty.setCellValueFactory(new PropertyValueFactory<>("dateTreaty"));
         nameProduct.setCellValueFactory(new PropertyValueFactory<>("nameProduct"));
-        tableAcc.setItems(treatyList);
-
-    }
+        tableAcc.setItems(treatyList);}
 
     private void initData() throws SQLException {
         dbHandler = new DatabaseHandler();
@@ -118,25 +76,15 @@ public class Acc {
             if (!rs.next()) break;
             treatyList.add(new ForAcc(rs.getString(1),
                     (rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4)),
-                    rs.getString(5), rs.getString(6), rs.getString(7)
-            ));
-        }
-    }
+                    rs.getString(5), rs.getString(6), rs.getString(7)));}}
 
     private void refreshTable() {
         tableAcc.getItems().clear();
-        try {
-            initData();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        try {initData();
+        } catch (SQLException e) {e.printStackTrace();}
         idClient.setCellValueFactory(new PropertyValueFactory<>("idClient"));
         fullName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         numberTreaty.setCellValueFactory(new PropertyValueFactory<>("numberTreaty"));
         dateTreaty.setCellValueFactory(new PropertyValueFactory<>("dateTreaty"));
         nameProduct.setCellValueFactory(new PropertyValueFactory<>("nameProduct"));
-        tableAcc.setItems(treatyList);
-
-    }
-
-}
+        tableAcc.setItems(treatyList);}}

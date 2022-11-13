@@ -1,11 +1,9 @@
 package com.robbit.askid;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class Main extends Application {
@@ -16,10 +14,9 @@ public class Main extends Application {
         stage.setTitle("Authorization");
         stage.getIcons().add(new Image("file:src/main/resources/picture/ico.png"));
         stage.setScene(scene);
-        stage.show();
-    }
+        stage.show();}
+
 
     public static void main(String[] args) {
         launch();
-    }
-}
+    }}
