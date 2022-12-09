@@ -14,39 +14,15 @@ public class ForAcc {
         this.dateTreaty = dateTreaty;
         this.nameProduct = nameProduct;}
     public ForAcc() {}
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    public String getIdClient() {
-        return idClient;
-    }
-    public void setIdClient(String idClient) {
-        this.idClient = idClient;
-    }
-    public String getFullName() {
-        return fullName;
-    }
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-    public String getNumberTreaty() {
-        return numberTreaty;
-    }
-    public void setNumberTreaty(String numberTreaty) {
-        this.numberTreaty = numberTreaty;
-    }
-    public String getDateTreaty() {
-        return dateTreaty;
-    }
-    public void setDateTreaty(String dateTreaty) {
-        this.dateTreaty = dateTreaty;
-    }
-    public String getNameProduct() {
-        return nameProduct;
-    }
-    public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
-    }}
+    public String getStatus() {return status;}
+    public void setStatus(String status) {this.status = status;}
+    public String getIdClient() {return idClient;}
+    public void setIdClient(String idClient) {this.idClient = idClient;}
+    public String getFullName() {return fullName;}
+    public void setFullName(String fullName) {this.fullName = fullName;}
+    public String getNumberTreaty() {return numberTreaty;}
+    public void setNumberTreaty(String numberTreaty) {this.numberTreaty = numberTreaty;}
+    public String getDateTreaty() {return dateTreaty;}
+    public void setDateTreaty(String dateTreaty) {this.dateTreaty = dateTreaty;}
+    public String getNameProduct() {return nameProduct;}
+    public void setNameProduct(String nameProduct) {this.nameProduct = nameProduct;}}

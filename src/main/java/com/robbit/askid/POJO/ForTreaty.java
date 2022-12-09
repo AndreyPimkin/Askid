@@ -1,6 +1,6 @@
 package com.robbit.askid.POJO;
 
-public class Treaty {
+public class ForTreaty {
     private String statusTreaty;
     private String numberTreaty;
     private String nameTreaty;
@@ -10,7 +10,7 @@ public class Treaty {
     public void setDateTreatyTo(String dateTreatyTo) {
         this.dateTreatyTo = dateTreatyTo;
     }
-    public Treaty(String numberTreaty, String nameTreaty, String dateTreaty, String dateTreatyTo, String statusTreaty) {
+    public ForTreaty(String numberTreaty, String nameTreaty, String dateTreaty, String dateTreatyTo, String statusTreaty) {
         this.statusTreaty = statusTreaty;
         this.dateTreatyTo = dateTreatyTo;
         this.numberTreaty = numberTreaty;
@@ -40,4 +40,4 @@ public class Treaty {
     public void setDateTreaty(String dateTreaty) {
         this.dateTreaty = dateTreaty;
     }
-    public Treaty() {}}
+    public ForTreaty() {}}

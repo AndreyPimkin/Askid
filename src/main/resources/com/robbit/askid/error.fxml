@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="250.0" style="-fx-background-color: #3eb0f7;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.robbit.askid.Controllers.ErrorController">
+   <children>
+      <Label fx:id="info" alignment="CENTER" contentDisplay="CENTER" layoutX="31.0" layoutY="14.0" prefHeight="75.0" prefWidth="189.0" style="-fx-wrap-text: true;" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="okButton" layoutX="99.0" layoutY="103.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="53.0" style="-fx-background-color: white; -fx-background-radius: 30;" styleClass="buttonError" stylesheets="@../../../CSS/Style.css" text="ОК">
+         <font>
+            <Font name="Verdana Bold" size="17.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>

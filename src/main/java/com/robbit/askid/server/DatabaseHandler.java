@@ -1,10 +1,7 @@
 package com.robbit.askid.server;
 
-import com.robbit.askid.AuthorizationController;
-import com.robbit.askid.POJO.ForAcc;
-import com.robbit.askid.POJO.ForClient;
-import com.robbit.askid.POJO.Product;
-import com.robbit.askid.POJO.Treaty;
+import com.robbit.askid.Controllers.AuthorizationController;
+import com.robbit.askid.POJO.*;
 
 import java.sql.*;
 
@@ -15,15 +12,26 @@ public class DatabaseHandler{
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         String connectionString = "jdbc:sqlserver://DESKTOP-2JU1ID3:1433;databaseName=automated_system;user=sa;password=sa;encrypt=false;";
         dbConnection = DriverManager.getConnection(connectionString);
-        return dbConnection;}
+        return dbConnection;
+    }
 
     public ResultSet autoUser(ForClient forClient){
         ResultSet resSet = null;
         String select = "SELECT * FROM client WHERE login =? AND password = ?";
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select); // Выполняем запрос
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
             prSt.setString(1, forClient.getLogin());
             prSt.setString(2, forClient.getPasswordOne());
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {e.printStackTrace();}return resSet;}
+
+    public ResultSet autoAdmin(ForAdmin forAdmin){
+        ResultSet resSet = null;
+        String select = "SELECT * FROM administrator WHERE login =? AND password = ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1, forAdmin.getLogin());
+            prSt.setString(2, forAdmin.getPasswordAdmin());
             resSet = prSt.executeQuery();
         } catch (SQLException | ClassNotFoundException e) {e.printStackTrace();}return resSet;}
 
@@ -31,19 +39,7 @@ public class DatabaseHandler{
         ResultSet resSet = null;
         String select = "SELECT * FROM accountant WHERE login =? AND password = ?";
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select); // Выполняем запрос
-            prSt.setString(1, forClient.getLogin());
-            prSt.setString(2, forClient.getPasswordOne());
-            resSet = prSt.executeQuery();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }return resSet;}
-
-    public ResultSet getID(ForClient forClient){
-        ResultSet resSet = null;
-        String select = "SELECT id_client FROM client WHERE login =? AND password = ?";
-        try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select); // Выполняем запрос
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
             prSt.setString(1, forClient.getLogin());
             prSt.setString(2, forClient.getPasswordOne());
             resSet = prSt.executeQuery();
@@ -55,7 +51,7 @@ public class DatabaseHandler{
         ResultSet resSet = null;
         String select = "SELECT * FROM client WHERE login =?";
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select); // Выполняем запрос
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
             prSt.setString(1, forClient.getLogin());
             resSet = prSt.executeQuery();
         } catch (SQLException | ClassNotFoundException e) {
@@ -76,7 +72,17 @@ public class DatabaseHandler{
         ResultSet resSet = null;
         String select = "SELECT * FROM product";
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select); // Выполняем запрос
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }return resSet;}
+
+    public ResultSet getTreaty(){
+        ResultSet resSet = null;
+        String select = "SELECT * FROM treaty";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
             resSet = prSt.executeQuery();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -87,7 +93,7 @@ public class DatabaseHandler{
         String select = "SELECT treaty.*, product.name  FROM treaty INNER JOIN product ON treaty.id_product = product.id_product " +
                 "WHERE id_client = " + AuthorizationController.id_client;
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select); // Выполняем запрос
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
             resSet = prSt.executeQuery();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -102,7 +108,7 @@ public class DatabaseHandler{
                 "INNER JOIN product ON treaty.id_product = product.id_product " +
                 "WHERE treaty.status = 'На рассмотрении'";
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select); // Выполняем запрос
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
             resSet = prSt.executeQuery();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();}
@@ -122,6 +128,91 @@ public class DatabaseHandler{
             prSt.setString(4, forClient.getDate());
             prSt.executeUpdate();
         } catch (SQLException e) {e.printStackTrace();}}
+
+    public void changeActivity(ForAdmin forAdmin) throws SQLException, ClassNotFoundException {
+        String insert = "UPDATE client SET activity=? WHERE id_client=?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1, forAdmin.getActivityColumn());
+            prSt.setString(2, forAdmin.getIdClientColumn());
+            prSt.executeUpdate();
+        } catch (SQLException e) {e.printStackTrace();}}
+
+    public void changeAcc(ForAdmin forAdmin) throws SQLException, ClassNotFoundException {
+        String insert = "UPDATE accountant SET name=?," +
+                "surname=?," +
+                "patronymic=?," +
+                "number = ?," +
+                "login = ?," +
+                "password =? " +
+                "WHERE id_acc= ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1, forAdmin.getNameAcc());
+            prSt.setString(2, forAdmin.getSurnameAcc());
+            prSt.setString(3, forAdmin.getPatronymicAcc());
+            prSt.setString(4, forAdmin.getNameAcc());
+            prSt.setString(5, forAdmin.getLoginColumn());
+            prSt.setString(6, forAdmin.getPasswordColumn());
+            prSt.setString(7, forAdmin.getIdAccColumn());
+            prSt.executeUpdate();
+        } catch (SQLException e) {e.printStackTrace();}}
+
+    public void addAcc(ForAdmin forAdmin) throws SQLException, ClassNotFoundException {
+        String insert = "INSERT INTO accountant VALUES (?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1, forAdmin.getIdAccColumn());
+            prSt.setString(2, forAdmin.getNameAcc());
+            prSt.setString(3, forAdmin.getSurnameAcc());
+            prSt.setString(4, forAdmin.getPatronymicAcc());
+            prSt.setString(5, forAdmin.getNumberColumn());
+            prSt.setString(6, forAdmin.getLoginColumn());
+            prSt.setString(7, forAdmin.getPasswordColumn());
+            prSt.executeUpdate();
+        } catch (SQLException e) {e.printStackTrace();}}
+
+    public void delAcc(ForAdmin forAdmin) throws SQLException, ClassNotFoundException {
+        String insert = "DELETE FROM accountant WHERE id_acc = ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1, forAdmin.getIdAccColumn());
+            prSt.executeUpdate();
+        } catch (SQLException e) {e.printStackTrace();}}
+
+    public void changeProduct(ForProduct forProduct) throws SQLException, ClassNotFoundException {
+        String insert = "UPDATE product SET price=?," +
+                "name=?," +
+                "date_product=? WHERE id_product= ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1, forProduct.getPriceProductColumn());
+            prSt.setString(2, forProduct.getNameProductColumn());
+            prSt.setString(3, forProduct.getDateProductColumn());
+            prSt.setString(4, forProduct.getIdProductColumn());
+
+            prSt.executeUpdate();
+        } catch (SQLException e) {e.printStackTrace();}}
+
+    public void addProduct(ForProduct forProduct) throws SQLException, ClassNotFoundException {
+        String insert = "INSERT INTO product VALUES (?,?,?,?)";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1, forProduct.getIdProductColumn());
+            prSt.setString(2, forProduct.getPriceProductColumn());
+            prSt.setString(3, forProduct.getNameProductColumn());
+            prSt.setString(4, forProduct.getDateProductColumn());
+            prSt.executeUpdate();
+        } catch (SQLException e) {e.printStackTrace();}}
+
+    public void delProduct(ForProduct forProduct) throws SQLException, ClassNotFoundException {
+        String insert = "DELETE FROM product WHERE id_product = ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1, forProduct.getIdProductColumn());
+            prSt.executeUpdate();
+        } catch (SQLException e) {e.printStackTrace();}}
+
 
     public void closeTreaty(ForAcc forAcc) throws SQLException, ClassNotFoundException {
         String insert = "UPDATE treaty SET status= ?, date_treaty_to= ? WHERE number_treaty = ?";
@@ -162,26 +253,56 @@ public class DatabaseHandler{
         ResultSet resSet = null;
         String select = "SELECT name, surname FROM client WHERE  id_client = " + AuthorizationController.id_client;
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select); // Выполняем запрос
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
             resSet = prSt.executeQuery();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }return resSet;}
 
-    public void addTreatyClient(Product product, Treaty treaty) throws SQLException, ClassNotFoundException {
-        String insert = "INSERT INTO  treaty(number_treaty, status, date_treaty, id_client, id_product)" +
+    public ResultSet getAcc(){
+        ResultSet resSet = null;
+        String select = "SELECT * FROM accountant";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }return resSet;}
+
+    public ResultSet getClientAd(){
+        ResultSet resSet = null;
+        String select = "SELECT * FROM client";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }return resSet;}
+
+    public ResultSet getClientAdTwo(ForAdmin forAdmin){
+        ResultSet resSet = null;
+        String select = "SELECT activity FROM client WHERE id_client = ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1, forAdmin.getIdAccColumn());
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }return resSet;}
+
+    public void addTreatyClient(ForProduct forProduct, ForTreaty forTreaty) throws SQLException, ClassNotFoundException {
+        String insert = "INSERT INTO  treaty(number_treaty, status, date_treaty_from, id_client, id_product)" +
                 "VALUES(?,?,?," + AuthorizationController.id_client +
                 ",(SELECT id_product FROM product WHERE  name = ?))" ;
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
-            prSt.setString(1, treaty.getNumberTreaty());
-            prSt.setString(2, treaty.getStatusTreaty());
-            prSt.setString(3, treaty.getDateTreaty());
-            prSt.setString(4, product.getNameProduct());
+            prSt.setString(1, forTreaty.getNumberTreaty());
+            prSt.setString(2, forTreaty.getStatusTreaty());
+            prSt.setString(3, forTreaty.getDateTreaty());
+            prSt.setString(4, forProduct.getNameProduct());
             prSt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();}}
-
 }
 
 

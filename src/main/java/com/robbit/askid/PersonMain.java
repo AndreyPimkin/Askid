@@ -8,18 +8,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class AdminMain extends Application {
+public class PersonMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 500, 300);
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setTitle("Admin");
         stage.getIcons().add(new Image("file:src/main/resources/picture/ico.png"));
         stage.setScene(scene);
-        stage.show();
-    }
+        stage.show();}
 
     public static void main(String[] args) {
         launch();
-    }
-}
+    }}
